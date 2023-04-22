@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, Button } from "react-native"
+import { View, Text, TouchableOpacity } from "react-native"
 import { Surface } from 'react-native-paper'
 import { IconButton } from '@react-native-material/core'
 
-function WeeklyCallender() {
+export default function WeeklyCalendar() {
   const [activeDay, setActiveDay] = useState(null);
   const [dateData, setDateData] = useState(null)
   const [today, setToday] = useState(null)
+  const [lastUpdateDate, setLastUpdateDate] = useState(null)
   const updateDays = () => {
     const today = new Date(); // Get the current date
     const dayOfWeek = today.getDay(); // Get the day of the week (0 = Sunday, 1 = Monday, etc.)
@@ -25,13 +26,23 @@ function WeeklyCallender() {
     setDateData(weekdays)
   }
 
+  const updateCalendar = () => {
+    const date = new Date();
+    if(date.getDay() == 1){
+      if(lastUpdateDate!=date.getDate()){
+
+      }
+    }
+  }
+
   useEffect(() => {
-    //updateDays()
+    updateDays()
     console.log("oldu")
   }, [])
 
-  const monthNames = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"]
-  
+
+
+
   return (<></>)
 
   return (
@@ -104,7 +115,22 @@ function WeeklyCallender() {
       </Surface>
     </View>
   )
-
 }
 
-export default WeeklyCallender
+const DayElement = ({ weekDay, date, activeDay }) => {
+  const dayNames = ["Pzt", "Sl", "Çrş", "Prş", "C", "Ct", "Pz"]
+  return (
+    <View style={{ alignItems: "center" }}>
+      <Text>{dayNames[weekDay]}</Text>
+      <TouchableOpacity
+      >
+        <Text>{date}</Text>
+      </TouchableOpacity>
+      <IconButton
+        style={{ backgroundColor: activeDay == 0 ? "#C2CBCD" : null }}
+        icon={<Text style={{ color: today == 0 ? "red" : "black" }}>{date}</Text>}
+        onPress={() => { setActiveDay(0) }}
+      />
+    </View>
+  )
+}
